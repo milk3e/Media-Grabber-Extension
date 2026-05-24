@@ -13,6 +13,8 @@ and allowing bulk download to differentiate them by their folder path.
 1. WIP
 
 **Useage Guide**
-1. WIP
+1. Click it while it is pinned to the toolbar to open its menu. While in a page with media loading/cached, it will display there.
+2. If two or more images share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
+3. To individually download an image, simply click the download button next to it. To bulk download everything in the current filter, click Download Filtered as ZIP.
 
 *This project has a MIT license because it uses [jszip](https://cdnjs.com/libraries/jszip) to handle zipping bulk downloads.*
