@@ -5,9 +5,9 @@ and allowing bulk download to differentiate them by their folder path.
 
 **How To Install (Firefox)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available.*
-1. Click the green 'Code' button, and download the zip. Extract the media-grabber folder found in Media-Grabber-Extension-main.
+1. From the files above, click media-grabber.zip, then click the download button.
 2. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
-3. Go to ```about:addons```, and drag-and-drop the media-grabber folder into the page.
+3. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page.
 4. Click the addons button (puzzle piece icon) and pin it to the toolbar.
 
 **How To Install (Chrome)**
