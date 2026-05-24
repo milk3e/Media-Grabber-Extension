@@ -1,3 +1,5 @@
+Current Version: **1.0**
+
 This extension is used for viewing all cached images on a webpage, downloading them individually or downloading them in bulk,
 and allowing bulk download to differentiate them by their folder path.
 
