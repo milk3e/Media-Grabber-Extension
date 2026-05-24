@@ -8,7 +8,6 @@ and allowing bulk download to differentiate them by their folder path.
 1. From the files above, click media-grabber.zip, then click the download button.
 2. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
 3. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page.
-4. Click the addons button (puzzle piece icon) and pin it to the toolbar.
 
 **How To Install (Chrome)**
 1. WIP
