@@ -5,7 +5,7 @@ This extension is used for viewing all cached media (images, gifs, videos, audio
 **This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile.
 
 **How To Install (Firefox / Firefox forks)**
-- *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available.*
+- *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available, however this has not been proven to be true.*
 1. From the files above, click media-grabber.zip, then click the download button. (Having it be .zip is necessary as Firefox may not allow just a raw folder.)
 2. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
 3. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page.
