@@ -1,9 +1,10 @@
 {
   "manifest_version": 3,
   "name": "Media Grabber",
-  "version": "1.0",
-  "description": "Streamlined bulk media extraction and downloading from browser memory.",
-  "permissions": ["activeTab", "scripting", "downloads"],
+  "version": "1.1",
+  "description": "Bulk media extraction and downloading from browser memory.",
+  "permissions": ["activeTab", "scripting"],
+  "host_permissions": ["<all_urls>"],
   "action": {
     "default_popup": "popup.html"
   },
