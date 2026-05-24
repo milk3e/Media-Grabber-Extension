@@ -2,7 +2,7 @@ Current Version: **1.1**
 
 This extension is used for viewing all cached media (images, gifs, videos, audio) on a webpage, downloading them individually or downloading them in bulk, and allowing bulk download to differentiate them by their file type and folder path.
 
-**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.**
+**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile.
 
 **How To Install (Firefox / Firefox forks)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available.*
