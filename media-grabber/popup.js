@@ -149,7 +149,7 @@ async function downloadAllAsZip() {
   api.tabs.sendMessage(currentTabId, {
     action: "triggerTabDownload",
     dataUrl: dataUrlPayload,
-    filename: `MediaSuite_Collection_${Date.now()}.zip`,
+    filename: `Media_${Date.now()}.zip`,
   });
 
   setTimeout(() => {
