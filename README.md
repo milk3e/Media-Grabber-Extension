@@ -5,7 +5,7 @@ and allowing bulk download to differentiate them by their folder path.
 
 **How To Install (Firefox)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available.*
-1. From the files above, click media-grabber.zip, then click the download button.
+1. From the files above, click media-grabber.zip, then click the download button. (Having it be .zip is necessary as Firefox may not allow just a raw folder.)
 2. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
 3. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page.
 
