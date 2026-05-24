@@ -4,6 +4,7 @@ and allowing bulk download to differentiate them by their folder path.
 **This extension has only been tested on Firefox (and Firefox forks), but *should* work on Google Chrome/Chromium.**
 
 **How To Install (Firefox)**
+Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available.
 1. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
 2. Go to ```about:addons```, and drag-and-drop the media-grabber folder into the page.
 3. Click the addons button (puzzle piece icon) and pin it to the toolbar.
