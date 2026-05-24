@@ -1,9 +1,6 @@
-Current Version: **1.0** *Currently undergoing testing and fixes, current version is circumstantially unstable*
+Current Version: **1.1**
 
-This extension is used for viewing all cached images on a webpage, downloading them individually or downloading them in bulk,
-and allowing bulk download to differentiate them by their folder path.
-
-*This extension is planned to support video and other media types as well, however is not implemented yet. Currently only supports images.*
+This extension is used for viewing all cached media (images, gifs, videos, audio) on a webpage, downloading them individually or downloading them in bulk, and allowing bulk download to differentiate them by their file type and folder path.
 
 **How To Install (Firefox / Firefox Forks)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available.*
@@ -18,8 +15,8 @@ and allowing bulk download to differentiate them by their folder path.
 
 **Useage Guide**
 1. Click it while it is pinned to the toolbar to open its menu. While in a page with media loading/cached, it will display there.
-2. If two or more images share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
-3. To individually download an image, simply click the download button next to it. To bulk download everything in the current filter, click Download Filtered as ZIP.
+2. If two or more media files share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
+3. To individually download a media file, simply click the download button next to it, it'll open in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
 
 *Coded by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
