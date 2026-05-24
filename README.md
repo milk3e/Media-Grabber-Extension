@@ -21,4 +21,4 @@ and allowing bulk download to differentiate them by their folder path.
 
 *Coded by [Google Gemini](https://gemini.google.com), then edited by me.*
 
-*This project has a MIT license because it uses [jszip](https://cdnjs.com/libraries/jszip) to handle zipping bulk downloads.*
+*This project has a MIT license because it uses [jszip](https://cdnjs.com/libraries/jszip) to handle zipping bulk downloads, which uses a MIT license.*
