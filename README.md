@@ -12,7 +12,9 @@ and allowing bulk download to differentiate them by their folder path.
 3. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page.
 
 **How To Install (Google Chrome / Chromium)**
-1. WIP
+1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
+2. Go to ```chrome://extensions/``` in your address bar, and enable the Developer Mode switch in the top right.
+3. Click 'Load unpacked' and go in the media-grabber folder, then click Open.
 
 **Useage Guide**
 1. Click it while it is pinned to the toolbar to open its menu. While in a page with media loading/cached, it will display there.
