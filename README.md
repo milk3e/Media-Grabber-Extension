@@ -18,7 +18,7 @@ This extension is used for viewing all cached media (images, gifs, videos, audio
 **Useage Guide**
 1. Click it while it is pinned to the toolbar to open its menu. While in a page with media loading/cached, it will display there.
 2. If two or more media files share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
-3. To individually download a media file, simply click the download button next to it, it'll open in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
+3. To individually download a media file, simply click the download button next to it, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
 
 *Coded by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
