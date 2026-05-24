@@ -1,0 +1,135 @@
+<!doctype html>
+<html lang="en">
+    <head>
+        <meta charset="UTF-8" />
+        <style>
+            body {
+                width: 440px;
+                font-family: system-ui, sans-serif;
+                padding: 12px;
+                margin: 0;
+                background: #f4f5f7;
+                color: #333;
+            }
+            h3 {
+                margin: 0 0 12px 0;
+                display: flex;
+                justify-content: space-between;
+                align-items: center;
+            }
+            /* Change this selector so it only affects top-level actions, not row items */
+            select,
+            .filters button,
+            #download-zip {
+                padding: 8px;
+                border-radius: 6px;
+                border: 1px solid #ccc;
+                background: #fff;
+                font-size: 13px;
+                width: 100%;
+                box-sizing: border-box;
+            }
+
+            .filters {
+                margin-bottom: 12px;
+            }
+
+            #download-zip {
+                background: #0076ff;
+                color: white;
+                border: none;
+                font-weight: bold;
+                cursor: pointer;
+                margin-bottom: 12px;
+            }
+
+            #download-zip:hover {
+                background: #0056b3;
+            }
+
+            #media-list {
+                max-height: 380px;
+                overflow-y: auto;
+                display: flex;
+                flex-direction: column;
+                gap: 8px;
+            }
+
+            .media-item {
+                display: flex;
+                align-items: center;
+                justify-content: space-between; /* Ensures row items space out nicely horizontally */
+                gap: 12px;
+                background: white;
+                padding: 10px;
+                border-radius: 8px;
+                box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
+            }
+
+            .img-wrapper {
+                width: 50px;
+                height: 50px;
+                position: relative;
+                flex-shrink: 0;
+            }
+
+            .img-wrapper img {
+                width: 100%;
+                height: 100%;
+                object-fit: cover;
+                border-radius: 4px;
+                background: #eee;
+            }
+
+            .img-wrapper:hover img {
+                position: absolute;
+                transform: scale(3.5);
+                z-index: 100;
+                box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+                transform-origin: left center;
+            }
+
+            .media-info {
+                flex: 1;
+                min-width: 0;
+            }
+
+            /* Restored visible styling for file names and paths */
+            .media-info p {
+                margin: 0;
+                font-size: 11px;
+                color: #666;
+                word-break: break-all; /* Prevents overflow hiding */
+            }
+
+            /* Scoped exclusively to the individual download button layout */
+            .single-dl {
+                background: #eef2f3;
+                border: 1px solid #ddd;
+                padding: 6px 10px;
+                border-radius: 4px;
+                cursor: pointer;
+                font-size: 12px;
+                width: auto; /* Overrides accidental 100% extensions */
+                flex-shrink: 0;
+            }
+
+            .single-dl:hover {
+                background: #e0e6ed;
+            }
+        </style>
+    </head>
+    <body>
+        <h3>Media Grabber <span id="count">(0)</span></h3>
+        <div class="filters">
+            <select id="filter-path">
+                <option value="">All Shared Folder Paths</option>
+            </select>
+        </div>
+        <button id="download-zip">Download Filtered as ZIP</button>
+        <div id="media-list">Reading active tab memory cache...</div>
+
+        <script src="jszip.min.js"></script>
+        <script src="popup.js"></script>
+    </body>
+</html>
