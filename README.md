@@ -14,6 +14,7 @@ This extension is used for viewing all cached media (images, gifs, videos, audio
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
 2. Go to ```chrome://extensions/``` in your address bar, and enable the Developer Mode switch in the top right.
 3. Click 'Load unpacked' and go in the media-grabber folder, then click Open.
+- *It's important you keep the media-grabber folder in a place to keep, as the browser is directly using that folder.*
 
 **Useage Guide**
 1. Click it while it is pinned to the toolbar to open its menu. While in a page with media loading/cached, it will display there.
