@@ -9,7 +9,7 @@ and allowing bulk download to differentiate them by their folder path.
 2. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
 3. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page.
 
-**How To Install (Chrome / Chromium)**
+**How To Install (Google Chrome / Chromium)**
 1. WIP
 
 **Useage Guide**
