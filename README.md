@@ -20,7 +20,7 @@ This extension is used for viewing all media (images, gifs, videos, audio) on a 
 1. Click it while it is pinned to the toolbar to open its menu. While on a page with media, it will display there.
 2. If two or more media files share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
 3. To individually download a media file, simply click the download button next to it to open it in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
-4. To find media that isn't loaded raw, you can press Deep Scan to find anything not raw.
+4. To find media that isn't loaded raw, you can press Deep Scan to try to find anything hidden.
 
 *Coded by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
