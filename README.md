@@ -1,6 +1,6 @@
 Current Version: **1.1**
 
-This extension is used for viewing all cached media (images, gifs, videos, audio) on a webpage, downloading them individually or downloading them in bulk, and allowing bulk download to differentiate them by their file type and folder path.
+This extension is used for viewing all raw media (images, gifs, videos, audio) on a webpage, downloading them individually or downloading them in bulk, and allowing bulk download to differentiate them by their file type and folder path.
 
 **This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile.
 
@@ -17,7 +17,7 @@ This extension is used for viewing all cached media (images, gifs, videos, audio
 - *It's important you keep the media-grabber folder in a place to keep, as Google Chrome / Chromium directly uses that folder.*
 
 **Useage Guide**
-1. Click it while it is pinned to the toolbar to open its menu. While in a page with media loading/cached, it will display there.
+1. Click it while it is pinned to the toolbar to open its menu. While on a page with media, it will display there.
 2. If two or more media files share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
 3. To individually download a media file, simply click the download button next to it, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
 
