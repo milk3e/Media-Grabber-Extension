@@ -10,6 +10,8 @@ const PAGE_SIZE = 50;
 let renderedCount = 0;
 let currentFiltered = [];
 
+const DEEP_SCAN_LABEL = "Deep Scan (blobs · embedded · hidden)";
+
 document.addEventListener("DOMContentLoaded", async () => {
   const [activeTab] = await api.tabs.query({
     active: true,
@@ -21,6 +23,8 @@ document.addEventListener("DOMContentLoaded", async () => {
   api.runtime.onMessage.addListener((message) => {
     if (message.action === "mediaUpdated") {
       processAndRender(message.assets);
+    } else if (message.action === "deepScanDone") {
+      onDeepScanDone(message.added);
     }
   });
 
@@ -38,6 +42,9 @@ document.addEventListener("DOMContentLoaded", async () => {
   document
     .getElementById("download-zip")
     .addEventListener("click", downloadAllAsZip);
+  document
+    .getElementById("deep-scan")
+    .addEventListener("click", runDeepScan);
 
   // Infinite-scroll loader inside the list container
   const container = document.getElementById("media-list");
@@ -50,6 +57,27 @@ document.addEventListener("DOMContentLoaded", async () => {
     }
   });
 });
+
+// ---------------------------------------------------------------------------
+// Deep scan: ask the content script to do the heavy, page-context work
+// (resolve blob: URLs, collect data: URLs, regex the raw HTML for hidden
+// media links). Results stream back via the normal "mediaUpdated" message.
+// ---------------------------------------------------------------------------
+function runDeepScan() {
+  const btn = document.getElementById("deep-scan");
+  btn.disabled = true;
+  btn.innerText = "Scanning page…";
+  api.tabs.sendMessage(currentTabId, { action: "deepScan" });
+}
+
+function onDeepScanDone(added) {
+  const btn = document.getElementById("deep-scan");
+  btn.disabled = false;
+  btn.innerText =
+    typeof added === "number"
+      ? `Deep Scan — found ${added} more (run again)`
+      : DEEP_SCAN_LABEL;
+}
 
 function processAndRender(assets) {
   const pathCounts = {};
@@ -120,11 +148,16 @@ function buildItemEl(item) {
   const itemEl = document.createElement("div");
   itemEl.className = "media-item";
 
-  const typeIcon = { image: "🖼", gif: "🎞", video: "🎬", audio: "🔊" }[item.type] || "📄";
+  const typeIcon =
+    { image: "🖼", gif: "🎞", video: "🎬", audio: "🔊" }[item.type] || "📄";
   const isVisual = item.type === "image" || item.type === "gif";
 
+  // For blob-sourced assets originalUrl is a page-scoped blob: URL the popup
+  // can't load — use the self-contained base64 dataUrl for the thumbnail.
+  const thumbSrc = item.dataUrl || item.originalUrl;
+
   const thumbHtml = isVisual
-    ? `<div class="img-wrapper"><img src="${item.originalUrl}" alt="${item.filename}" loading="lazy" /></div>`
+    ? `<div class="img-wrapper"><img src="${thumbSrc}" alt="${item.filename}" loading="lazy" /></div>`
     : `<div class="img-wrapper type-icon">${typeIcon}</div>`;
 
   itemEl.innerHTML = `
@@ -139,13 +172,23 @@ function buildItemEl(item) {
 
   itemEl.querySelector(".single-dl").addEventListener("click", (e) => {
     e.stopPropagation();
-    // Trigger a direct navigation download in the tab — no canvas needed
-    api.tabs.sendMessage(currentTabId, {
-      action: "triggerTabDownload",
-      dataUrl: null,          // signal: fetch-and-download mode
-      directUrl: item.originalUrl,
-      filename: item.filename,
-    });
+    if (item.dataUrl) {
+      // blob-sourced: hand the page the base64 payload so the content script
+      // can create a same-origin blob URL and trigger the download attribute
+      // correctly (the only path that works for base64 payloads).
+      api.tabs.sendMessage(currentTabId, {
+        action: "triggerTabDownload",
+        dataUrl: item.dataUrl,
+        directUrl: null,
+        filename: item.filename,
+      });
+    } else {
+      // For plain http(s) and data: URLs, open in a new tab.
+      // Routing through a hidden <a download> in the current page doesn't work
+      // for cross-origin URLs — browsers ignore the download attribute there and
+      // navigate the current tab instead. tabs.create avoids that entirely.
+      api.tabs.create({ url: item.originalUrl });
+    }
   });
 
   return itemEl;
@@ -163,39 +206,54 @@ async function downloadAllAsZip() {
 
   const zip = new JSZip();
 
+  // Avoid silent overwrites when two assets share a name (common with the
+  // generated blob_/embedded_ names, but also real files in different dirs).
+  const usedNames = new Set();
+  function uniqueName(name) {
+    if (!usedNames.has(name)) {
+      usedNames.add(name);
+      return name;
+    }
+    const dot = name.lastIndexOf(".");
+    const base = dot === -1 ? name : name.slice(0, dot);
+    const ext = dot === -1 ? "" : name.slice(dot);
+    let i = 1;
+    let candidate;
+    do {
+      candidate = `${base}_${i}${ext}`;
+      i++;
+    } while (usedNames.has(candidate));
+    usedNames.add(candidate);
+    return candidate;
+  }
+
   for (let i = 0; i < total; i++) {
     const item = targets[i];
 
     try {
-      // Fetch the resource as a blob using the URL directly.
-      // This avoids canvas/CORS issues and keeps memory flat.
-      const resp = await fetch(item.originalUrl);
+      // Prefer the self-contained payload (base64 data: URL) for blob assets;
+      // fetch() handles http(s) and data: URLs alike. blob: URLs are never the
+      // fetch target here — they were already converted to dataUrl page-side.
+      const src = item.dataUrl || item.originalUrl;
+      const resp = await fetch(src);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);
       const blob = await resp.blob();
       const arrayBuf = await blob.arrayBuffer();
-      zip.file(item.filename, arrayBuf);
+      zip.file(uniqueName(item.filename), arrayBuf);
     } catch {
       // Skip assets that can't be fetched (cross-origin, expired, etc.)
     }
 
     dlButton.innerText = `Packing (${i + 1}/${total})...`;
-    // Yield to keep the UI responsive every 10 items
     if (i % 10 === 0) await new Promise((r) => setTimeout(r, 0));
   }
 
   dlButton.innerText = "Compiling ZIP...";
   await new Promise((r) => setTimeout(r, 0));
 
-  // Generate as base64 so the payload is fully self-contained in the message.
-  // A blob URL is scoped to the popup context and dies the moment the popup
-  // closes (which happens as soon as the OS save dialog steals focus), leaving
-  // the download manager fetching a dead URL. A data: URL carries its own bytes
-  // and survives popup teardown.
   const base64Zip = await zip.generateAsync({ type: "base64" });
   const dataUrl = "data:application/zip;base64," + base64Zip;
 
-  // Route through the content script so the <a download> click fires in the
-  // page context, which is guaranteed to outlive the popup.
   api.tabs.sendMessage(currentTabId, {
     action: "triggerTabDownload",
     dataUrl: dataUrl,
@@ -203,8 +261,4 @@ async function downloadAllAsZip() {
   });
 
   dlButton.innerText = "Opening File Save...";
-
-  // Never re-enable — the popup will be closed by the OS dialog stealing focus,
-  // so this state doesn't need to reset. If somehow it stays open, leave it
-  // showing the final state to avoid confusing a second click.
 }

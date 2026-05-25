@@ -59,6 +59,30 @@
         cursor: default;
       }
 
+      #deep-scan {
+        display: block;
+        width: 100%;
+        padding: 7px;
+        border-radius: 6px;
+        border: 1px solid #cdd3da;
+        background: #fff;
+        color: #334;
+        font-weight: 600;
+        font-size: 12px;
+        cursor: pointer;
+        margin-bottom: 12px;
+        box-sizing: border-box;
+      }
+
+      #deep-scan:hover:not(:disabled) {
+        background: #eef2f7;
+      }
+
+      #deep-scan:disabled {
+        opacity: 0.7;
+        cursor: default;
+      }
+
       #media-list {
         max-height: 380px;
         overflow-y: auto;
@@ -162,6 +186,7 @@
     </div>
 
     <button id="download-zip">Download Filtered as ZIP</button>
+    <button id="deep-scan">Deep Scan (blobs · embedded · hidden)</button>
     <div id="media-list">Reading active tab media...</div>
 
     <script src="jszip.min.js"></script>
