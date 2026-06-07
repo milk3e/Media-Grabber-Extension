@@ -166,14 +166,13 @@ function renderChips(containerId, counts, activeSet, onToggle, labels) {
   }
 
   sorted.forEach((val) => {
-    const chip = document.createElement("button");
+    const chip = document.createElement("span");
     chip.className = "filter-chip" + (activeSet.has(val) ? " active" : "");
     const label = (labels && labels[val]) ? labels[val] : val;
     chip.title = val;
     chip.innerHTML = `<span class="chip-label">${label}</span><span class="chip-count">${counts[val]}</span>`;
     chip.addEventListener("click", () => {
       onToggle(val);
-      // Re-render just this chip's active state without full rebuild
       chip.className = "filter-chip" + (activeSet.has(val) ? " active" : "");
     });
     area.appendChild(chip);
