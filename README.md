@@ -12,7 +12,7 @@ This extension is used for viewing all media (images, gifs, videos, audio) on a 
 **How to Install (Firefox / Firefox forks)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available, however this has not been proven to be true and may work anyway.*
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
-2. Compress the files in media-grabber into a .zip (not the folder itself, just its contents like the .js .json and .html files).
+2. Compress the files in media-grabber into a .zip (not the folder itself, just its contents).
 3. Go to ```about:config``` in your address bar, then search for ```xpinstall.signatures.required``` and set it to false.
 4. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page. On the page, a popup is made, click the 'Add' button.
 
