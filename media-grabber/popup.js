@@ -124,17 +124,29 @@ function rebuildFilterUI() {
     filterAndRender();
   }, { image: "Image", gif: "GIF", video: "Video", audio: "Audio" });
 
-  // Only show paths that contain more than one item (same as old dropdown logic)
+  // Only show paths with more than one item
   const sharedPathCounts = {};
   for (const [p, n] of Object.entries(pathCounts)) {
     if (n > 1) sharedPathCounts[p] = n;
   }
-  // Clean up any selected paths that no longer qualify
-  for (const p of [...selectedPaths]) {
-    if (!sharedPathCounts[p]) selectedPaths.delete(p);
+
+  // Drop any path whose count is identical to one of its direct children —
+  // it means every item it would match is already covered by that child,
+  // so showing the parent adds no filtering value.
+  const usefulPathCounts = {};
+  for (const [p, n] of Object.entries(sharedPathCounts)) {
+    const hasDistinctChild = Object.entries(sharedPathCounts).some(
+      ([other, otherN]) => other !== p && other.startsWith(p) && otherN === n
+    );
+    if (!hasDistinctChild) usefulPathCounts[p] = n;
   }
 
-  renderChips("filter-path-area", sharedPathCounts, selectedPaths, (val) => {
+  // Clean up any selected paths that no longer qualify
+  for (const p of [...selectedPaths]) {
+    if (!usefulPathCounts[p]) selectedPaths.delete(p);
+  }
+
+  renderChips("filter-path-area", usefulPathCounts, selectedPaths, (val) => {
     toggleFilter(selectedPaths, val);
     filterAndRender();
   });
