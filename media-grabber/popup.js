@@ -10,6 +10,12 @@ const PAGE_SIZE = 50;
 let renderedCount = 0;
 let currentFiltered = [];
 
+// ---------------------------------------------------------------------------
+// Multiselect filter state
+// ---------------------------------------------------------------------------
+let selectedTypes = new Set();   // e.g. {"image","gif"}
+let selectedPaths = new Set();   // e.g. {"/assets/images/"}
+
 const DEEP_SCAN_LABEL = "Deep Scan (blobs · embedded · hidden)";
 
 document.addEventListener("DOMContentLoaded", async () => {
@@ -34,12 +40,6 @@ document.addEventListener("DOMContentLoaded", async () => {
   });
 
   document
-    .getElementById("filter-path")
-    .addEventListener("change", filterAndRender);
-  document
-    .getElementById("filter-type")
-    .addEventListener("change", filterAndRender);
-  document
     .getElementById("download-zip")
     .addEventListener("click", downloadAllAsZip);
   document
@@ -59,9 +59,7 @@ document.addEventListener("DOMContentLoaded", async () => {
 });
 
 // ---------------------------------------------------------------------------
-// Deep scan: ask the content script to do the heavy, page-context work
-// (resolve blob: URLs, collect data: URLs, regex the raw HTML for hidden
-// media links). Results stream back via the normal "mediaUpdated" message.
+// Deep scan
 // ---------------------------------------------------------------------------
 function runDeepScan() {
   const btn = document.getElementById("deep-scan");
@@ -80,39 +78,116 @@ function onDeepScanDone(added) {
 }
 
 function processAndRender(assets) {
-  const pathCounts = {};
-
-  processedMedia = assets.map((item) => {
-    pathCounts[item.pathDirectory] =
-      (pathCounts[item.pathDirectory] || 0) + 1;
-    return { ...item };
-  });
-
-  updateFilterDropdowns(pathCounts);
+  processedMedia = assets.map((item) => ({ ...item }));
+  rebuildFilterUI();
   filterAndRender();
 }
 
-function updateFilterDropdowns(pathCounts) {
-  const pathSelect = document.getElementById("filter-path");
-  const currentPath = pathSelect.value;
+// ---------------------------------------------------------------------------
+// Build all ancestor paths from a leaf pathDirectory.
+// e.g. "/foo/bar/baz/" -> ["/foo/", "/foo/bar/", "/foo/bar/baz/"]
+// ---------------------------------------------------------------------------
+function ancestorPaths(pathDirectory) {
+  // Special virtual dirs like "(in-memory blob)" pass through as-is
+  if (!pathDirectory.startsWith("/")) return [pathDirectory];
+  const parts = pathDirectory.replace(/^\//, "").replace(/\/$/, "").split("/").filter(Boolean);
+  const paths = [];
+  for (let i = 0; i < parts.length; i++) {
+    paths.push("/" + parts.slice(0, i + 1).join("/") + "/");
+  }
+  if (paths.length === 0) paths.push("/");
+  return paths;
+}
 
-  pathSelect.innerHTML = '<option value="">All Folder Paths</option>';
-  Object.keys(pathCounts).forEach((path) => {
-    if (pathCounts[path] > 1) {
-      pathSelect.innerHTML += `<option value="${path}">${path} (${pathCounts[path]})</option>`;
-    }
+// ---------------------------------------------------------------------------
+// Rebuild the chip filter UI based on current processedMedia
+// ---------------------------------------------------------------------------
+function rebuildFilterUI() {
+  const typeCounts = {};
+  const pathCounts = {};
+
+  processedMedia.forEach((item) => {
+    typeCounts[item.type] = (typeCounts[item.type] || 0) + 1;
+    // Count every ancestor path so parent folders show the sum of their children
+    ancestorPaths(item.pathDirectory).forEach((p) => {
+      pathCounts[p] = (pathCounts[p] || 0) + 1;
+    });
   });
 
-  pathSelect.value = currentPath;
+  // Remove selected types that no longer exist in data
+  for (const t of [...selectedTypes]) {
+    if (!typeCounts[t]) selectedTypes.delete(t);
+  }
+
+  renderChips("filter-type-area", typeCounts, selectedTypes, (val) => {
+    toggleFilter(selectedTypes, val);
+    filterAndRender();
+  }, { image: "Image", gif: "GIF", video: "Video", audio: "Audio" });
+
+  // Only show paths that contain more than one item (same as old dropdown logic)
+  const sharedPathCounts = {};
+  for (const [p, n] of Object.entries(pathCounts)) {
+    if (n > 1) sharedPathCounts[p] = n;
+  }
+  // Clean up any selected paths that no longer qualify
+  for (const p of [...selectedPaths]) {
+    if (!sharedPathCounts[p]) selectedPaths.delete(p);
+  }
+
+  renderChips("filter-path-area", sharedPathCounts, selectedPaths, (val) => {
+    toggleFilter(selectedPaths, val);
+    filterAndRender();
+  });
+}
+
+function toggleFilter(set, val) {
+  if (set.has(val)) set.delete(val);
+  else set.add(val);
+}
+
+// Render clickable chips for a filter row; active chips are highlighted
+function renderChips(containerId, counts, activeSet, onToggle, labels) {
+  const area = document.getElementById(containerId);
+  if (!area) return;
+  area.innerHTML = "";
+
+  const sorted = Object.keys(counts).sort((a, b) => {
+    // Sort paths: shorter (parent) paths first, then alphabetically
+    if (a.startsWith("/") && b.startsWith("/")) {
+      const depthDiff = (a.match(/\//g) || []).length - (b.match(/\//g) || []).length;
+      if (depthDiff !== 0) return depthDiff;
+    }
+    return a.localeCompare(b);
+  });
+
+  if (sorted.length === 0) {
+    area.innerHTML = '<span class="filter-empty">—</span>';
+    return;
+  }
+
+  sorted.forEach((val) => {
+    const chip = document.createElement("button");
+    chip.className = "filter-chip" + (activeSet.has(val) ? " active" : "");
+    const label = (labels && labels[val]) ? labels[val] : val;
+    chip.title = val;
+    chip.innerHTML = `<span class="chip-label">${label}</span><span class="chip-count">${counts[val]}</span>`;
+    chip.addEventListener("click", () => {
+      onToggle(val);
+      // Re-render just this chip's active state without full rebuild
+      chip.className = "filter-chip" + (activeSet.has(val) ? " active" : "");
+    });
+    area.appendChild(chip);
+  });
 }
 
 function filterAndRender() {
-  const selectedPath = document.getElementById("filter-path").value;
-  const selectedType = document.getElementById("filter-type").value;
-
   currentFiltered = processedMedia.filter((item) => {
-    if (selectedPath && item.pathDirectory !== selectedPath) return false;
-    if (selectedType && item.type !== selectedType) return false;
+    if (selectedTypes.size > 0 && !selectedTypes.has(item.type)) return false;
+    if (selectedPaths.size > 0) {
+      // Item matches if any of its ancestor paths is in selectedPaths
+      const ancestors = ancestorPaths(item.pathDirectory);
+      if (!ancestors.some((p) => selectedPaths.has(p))) return false;
+    }
     return true;
   });
 
@@ -172,23 +247,7 @@ function buildItemEl(item) {
 
   itemEl.querySelector(".single-dl").addEventListener("click", (e) => {
     e.stopPropagation();
-    if (item.dataUrl) {
-      // blob-sourced: hand the page the base64 payload so the content script
-      // can create a same-origin blob URL and trigger the download attribute
-      // correctly (the only path that works for base64 payloads).
-      api.tabs.sendMessage(currentTabId, {
-        action: "triggerTabDownload",
-        dataUrl: item.dataUrl,
-        directUrl: null,
-        filename: item.filename,
-      });
-    } else {
-      // For plain http(s) and data: URLs, open in a new tab.
-      // Routing through a hidden <a download> in the current page doesn't work
-      // for cross-origin URLs — browsers ignore the download attribute there and
-      // navigate the current tab instead. tabs.create avoids that entirely.
-      api.tabs.create({ url: item.originalUrl });
-    }
+    api.tabs.create({ url: item.dataUrl || item.originalUrl });
   });
 
   return itemEl;
@@ -206,8 +265,7 @@ async function downloadAllAsZip() {
 
   const zip = new JSZip();
 
-  // Avoid silent overwrites when two assets share a name (common with the
-  // generated blob_/embedded_ names, but also real files in different dirs).
+  // Avoid silent overwrites when two assets share a name.
   const usedNames = new Set();
   function uniqueName(name) {
     if (!usedNames.has(name)) {
@@ -231,9 +289,6 @@ async function downloadAllAsZip() {
     const item = targets[i];
 
     try {
-      // Prefer the self-contained payload (base64 data: URL) for blob assets;
-      // fetch() handles http(s) and data: URLs alike. blob: URLs are never the
-      // fetch target here — they were already converted to dataUrl page-side.
       const src = item.dataUrl || item.originalUrl;
       const resp = await fetch(src);
       if (!resp.ok) throw new Error(`HTTP ${resp.status}`);

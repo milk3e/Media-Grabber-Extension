@@ -19,20 +19,73 @@
         align-items: center;
       }
 
-      .filters {
-        display: flex;
-        gap: 8px;
-        margin-bottom: 10px;
+      /* -----------------------------------------------------------------------
+         Chip filter rows
+      ----------------------------------------------------------------------- */
+      .filter-section {
+        margin-bottom: 8px;
       }
 
-      .filters select {
-        flex: 1;
-        padding: 7px 8px;
-        border-radius: 6px;
-        border: 1px solid #ccc;
+      .filter-label {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #888;
+        margin-bottom: 4px;
+      }
+
+      .filter-chips {
+        display: flex;
+        flex-wrap: wrap;
+        gap: 5px;
+      }
+
+      .filter-chip {
+        display: inline-flex;
+        align-items: center;
+        gap: 4px;
+        padding: 3px 8px 3px 8px;
+        border-radius: 20px;
+        border: 1px solid #cdd3da;
         background: #fff;
-        font-size: 12px;
-        box-sizing: border-box;
+        color: #444;
+        font-size: 11px;
+        font-weight: 600;
+        cursor: pointer;
+        transition: background 0.1s, border-color 0.1s, color 0.1s;
+        white-space: nowrap;
+        max-width: 200px;
+        overflow: hidden;
+        text-overflow: ellipsis;
+      }
+
+      .filter-chip:hover {
+        background: #eef2f7;
+        border-color: #aab;
+      }
+
+      .filter-chip.active {
+        background: #0076ff;
+        border-color: #0060d0;
+        color: #fff;
+      }
+
+      .filter-chip .chip-label {
+        overflow: hidden;
+        text-overflow: ellipsis;
+        white-space: nowrap;
+      }
+
+      .filter-chip .chip-count {
+        font-size: 10px;
+        opacity: 0.75;
+        flex-shrink: 0;
+      }
+
+      .filter-empty {
+        font-size: 11px;
+        color: #bbb;
       }
 
       #download-zip {
@@ -121,7 +174,6 @@
         border-radius: 4px;
       }
 
-      /* Non-image media type placeholder */
       .img-wrapper.type-icon {
         font-size: 22px;
         background: #f0f0f0;
@@ -172,17 +224,14 @@
   <body>
     <h3>Media Grabber <span id="count">(0)</span></h3>
 
-    <div class="filters">
-      <select id="filter-type">
-        <option value="">All Types</option>
-        <option value="image">Images</option>
-        <option value="gif">GIFs</option>
-        <option value="video">Videos</option>
-        <option value="audio">Audio</option>
-      </select>
-      <select id="filter-path">
-        <option value="">All Folder Paths</option>
-      </select>
+    <div class="filter-section">
+      <div class="filter-label">Type</div>
+      <div class="filter-chips" id="filter-type-area"></div>
+    </div>
+
+    <div class="filter-section" style="margin-bottom:12px;">
+      <div class="filter-label">Path</div>
+      <div class="filter-chips" id="filter-path-area"></div>
     </div>
 
     <button id="download-zip">Download Filtered as ZIP</button>
