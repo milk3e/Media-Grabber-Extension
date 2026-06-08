@@ -1,7 +1,7 @@
 # Media Grabber (Version 2.4)
 <img width="64" height="64" alt="media-grabber" src="https://github.com/user-attachments/assets/f4d94813-a4e2-4030-aab8-da0ea87d96c0" /> *Icon by [projectile-vomit](https://github.com/projectile-vomit)*
 
-This is an extension used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
+This is a browser extension used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
 
 This extension is known to support Chromium (Google Chrome, Brave, etc) and Firefox (LibreWolf, etc), but it likely supports more browsers like Edge, they just haven't been tested. It has not been tested on mobile, and it may be more difficult to put an unpacked extension on mobile as most mobile browsers don't support it.
 
