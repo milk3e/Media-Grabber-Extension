@@ -1,7 +1,7 @@
 # Media Grabber Extension (Version 2.4)
-This extension is used for viewing all media (images, gifs, videos, audio) on a webpage, downloading them individually or downloading them in bulk, and allowing bulk download to differentiate them by their file type and folder path. Has scanning capabilities to find hidden media.
+This extension is used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
 
-**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile, and it's not known if mobile browsers are even capable of installing unpacked extensions.
+**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile, and it may be more difficult to put an unpacked extension on mobile.
 
 **How to Install (Google Chrome / Chromium)**
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
@@ -18,9 +18,9 @@ This extension is used for viewing all media (images, gifs, videos, audio) on a 
 
 **Useage Guide**
 1. Click it while it is pinned to the toolbar to open its menu. While on a page with media, it will display there.
-2. If two or more media files share the same filepath, they can be isolated by selecting the filepath in the "All Shared Folder Paths" dropdown.
-3. To individually download a media file, simply click the download button next to it to open it in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
-4. To find media that isn't loaded raw, you can press Deep Scan to try to find anything hidden.
+2. Click the Type and Path buttons to isolate specific media.
+3. To individually download a media file, click the download button next to it to open it in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
+4. To find media that isn't loaded raw, you can press Deep Scan to try to find anything hidden. (Some browsers may have issues individually downloading embedded blob data, but can still download them as zip.)
 
 *Coded by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
