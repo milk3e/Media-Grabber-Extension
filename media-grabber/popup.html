@@ -3,13 +3,27 @@
   <head>
     <meta charset="UTF-8" />
     <style>
-      body {
+      html, body {
         width: 460px;
+        height: 580px;
+        overflow: hidden;
         font-family: system-ui, sans-serif;
-        padding: 12px;
+        padding: 0;
         margin: 0;
         background: #f4f5f7;
         color: #333;
+        box-sizing: border-box;
+      }
+
+      /* Single scrollable column that fills the popup exactly */
+      .popup-inner {
+        width: 100%;
+        height: 100%;
+        overflow: hidden;
+        display: flex;
+        flex-direction: column;
+        padding: 12px;
+        box-sizing: border-box;
       }
 
       h3 {
@@ -24,21 +38,28 @@
       ----------------------------------------------------------------------- */
       .filter-section {
         margin-bottom: 8px;
+        flex-shrink: 0;
       }
 
-      .filter-label {
-        font-size: 10px;
-        font-weight: 700;
-        text-transform: uppercase;
-        letter-spacing: 0.05em;
-        color: #888;
-        margin-bottom: 4px;
+      /* Path chips get a fixed max-height (~3 rows) and scroll internally */
+      .filter-section.paths {
+        display: flex;
+        flex-direction: column;
+        min-height: 0;
+        margin-bottom: 8px;
+        flex-shrink: 0;
       }
 
       .filter-chips {
         display: flex;
         flex-wrap: wrap;
         gap: 5px;
+      }
+
+      .filter-chips.scrollable {
+        max-height: 76px; /* ~3 rows of chips at ~22px each */
+        overflow-y: auto;
+        overflow-x: hidden;
       }
 
       .filter-chip {
@@ -77,7 +98,17 @@
         white-space: nowrap;
       }
 
-      .filter-chip .chip-count {
+      .filter-label {
+        font-size: 10px;
+        font-weight: 700;
+        text-transform: uppercase;
+        letter-spacing: 0.05em;
+        color: #888;
+        margin-bottom: 4px;
+        flex-shrink: 0;
+      }
+
+
         font-size: 10px;
         opacity: 0.75;
         flex-shrink: 0;
@@ -137,7 +168,8 @@
       }
 
       #media-list {
-        max-height: 380px;
+        flex: 1;
+        min-height: 0;
         overflow-y: auto;
         display: flex;
         flex-direction: column;
@@ -222,6 +254,7 @@
     </style>
   </head>
   <body>
+    <div class="popup-inner">
     <h3>Media Grabber <span id="count">(0)</span></h3>
 
     <div class="filter-section">
@@ -229,14 +262,15 @@
       <div class="filter-chips" id="filter-type-area"></div>
     </div>
 
-    <div class="filter-section" style="margin-bottom:12px;">
+    <div class="filter-section paths" style="margin-bottom:12px;">
       <div class="filter-label">Path</div>
-      <div class="filter-chips" id="filter-path-area"></div>
+      <div class="filter-chips scrollable" id="filter-path-area"></div>
     </div>
 
     <button id="download-zip">Download Filtered as ZIP</button>
     <button id="deep-scan">Deep Scan (blobs · embedded · hidden)</button>
     <div id="media-list">Reading active tab media...</div>
+    </div>
 
     <script src="jszip.min.js"></script>
     <script src="popup.js"></script>
