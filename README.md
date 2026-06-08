@@ -10,6 +10,7 @@ This extension is known to support Chromium (Google Chrome, Brave, etc) and Fire
 2. Go to ```chrome://extensions/``` in your address bar, and enable the Developer Mode switch in the top right.
 3. Click 'Load unpacked' and go in the media-grabber folder, then click Open.
 - *It's important you keep the media-grabber folder in a place to keep, as the browser directly uses that folder.*
+- *The extension in Chromium may show a warning for `background.scripts` using manifest version 2, but that's just for Firefox. Chromium is just bothered by Firefox being supported, it doesn't actually effect Chromium in any way.*
 
 **How to Install for Firefox (LibreWolf, etc)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. Some versions of Firefox may not have this setting available.*
