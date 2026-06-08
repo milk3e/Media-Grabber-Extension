@@ -26,4 +26,4 @@ This is an extension used for viewing all media and hidden media (images, gifs, 
 
 *Coded by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
-*This project has a MIT license because it uses [jszip](https://cdnjs.com/libraries/jszip) to handle zipping bulk downloads, which uses a MIT license.*
+*This project has a MIT license because it uses [jszip](https://stuk.github.io/jszip/) to handle zipping bulk downloads, which uses a MIT license.*
