@@ -1,5 +1,5 @@
-<img width="64" height="64" alt="media-grabber" src="https://github.com/user-attachments/assets/f4d94813-a4e2-4030-aab8-da0ea87d96c0" /> # Media Grabber (Version 2.4)
-*Icon by [projectile-vomit](https://github.com/projectile-vomit)*
+# Media Grabber (Version 2.4)
+<img width="64" height="64" alt="media-grabber" src="https://github.com/user-attachments/assets/f4d94813-a4e2-4030-aab8-da0ea87d96c0" /> *Icon by [projectile-vomit](https://github.com/projectile-vomit)*
 
 This is an extension used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
 
