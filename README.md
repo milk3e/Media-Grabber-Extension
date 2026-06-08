@@ -5,13 +5,13 @@ This is an extension used for viewing all media and hidden media (images, gifs, 
 
 **This extension is known to support Chromium (Google Chrome, Brave, etc) and Firefox (LibreWolf, etc).** It has not been tested on mobile, and it may be more difficult to put an unpacked extension on mobile.
 
-**How to Install (Google Chrome / Chromium)**
+**How to Install for Chromium (Google Chrome, Brave, etc)**
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
 2. Go to ```chrome://extensions/``` in your address bar, and enable the Developer Mode switch in the top right.
 3. Click 'Load unpacked' and go in the media-grabber folder, then click Open.
 - *It's important you keep the media-grabber folder in a place to keep, as Google Chrome / Chromium directly uses that folder.*
 
-**How to Install (Firefox / Firefox forks)**
+**How to Install for Firefox (LibreWolf, etc)**
 - *Since this is a raw, unpackaged extension, it requires a setting to be changed to allow it. If you are not using Firefox Nightly/Dev or a fork, you may not have this setting available, however this has not been proven to be true and may work anyway.*
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
 2. Compress the files in media-grabber into a .zip (not the folder itself, just its contents).
