@@ -3,7 +3,7 @@
 
 This is an extension used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
 
-**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile, and it may be more difficult to put an unpacked extension on mobile.
+**This extension is known to support Chromium (Google Chrome, Brave, etc) and Firefox (LibreWolf, etc).** It has not been tested on mobile, and it may be more difficult to put an unpacked extension on mobile.
 
 **How to Install (Google Chrome / Chromium)**
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
