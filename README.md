@@ -1,7 +1,7 @@
 # Media Grabber Extension (Version 2.4)
 This extension is used for viewing all media (images, gifs, videos, audio) on a webpage, downloading them individually or downloading them in bulk, and allowing bulk download to differentiate them by their file type and folder path. Has scanning capabilities to find hidden media.
 
-**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile.
+**This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile, and it's not known if mobile browsers are even capable of installing unpacked extensions.
 
 **How to Install (Google Chrome / Chromium)**
 1. From the files above, click the green 'Code' button, and download as zip. Extract the media-grabber folder found in the Media-Grabber-Extension-main folder.
