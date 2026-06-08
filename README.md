@@ -19,7 +19,7 @@ This is an extension used for viewing all media and hidden media (images, gifs, 
 4. Go to ```about:addons```, drag-and-drop media-grabber.zip into the page. On the page, a popup is made, click the 'Add' button.
 
 **Useage Guide**
-1. Click it while it is pinned to the toolbar to open its menu. While on a page with media, it will display there.
+1. Click it while it is pinned to the toolbar to open its menu. While on a page with media, it will display its media.
 2. Click the Type and Path buttons to isolate specific media.
 3. To individually download a media file, click the download button next to it to open it in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
 4. To find media that isn't loaded raw, you can press Deep Scan to try to find anything hidden. (Some browsers may have issues individually downloading embedded blob data, but can still download them as zip.)
