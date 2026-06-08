@@ -1,5 +1,5 @@
 # Media Grabber (Version 2.4)
-This extension is used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
+This is an extension used for viewing all media and hidden media (images, gifs, videos, audio) on a webpage, downloading them individually or in bulk, and filtering by type and file path.
 
 **This extension is known to support Firefox, Firefox forks, Google Chrome, and Chromium.** It has not been tested on mobile, and it may be more difficult to put an unpacked extension on mobile.
 
