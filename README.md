@@ -26,4 +26,4 @@ This extension is known to support Chromium (Google Chrome, Brave, etc) and Fire
 
 *This project's code was made by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
-*This project has a MIT license because it uses [jszip](https://stuk.github.io/jszip/) to handle zipping bulk downloads, which uses a MIT license.*
+*This project has an MIT license because it uses [jszip](https://stuk.github.io/jszip/) to handle zipping bulk downloads, which uses a MIT license.*
