@@ -24,6 +24,6 @@ This extension is known to support Chromium (Google Chrome, Brave, etc) and Fire
 3. To individually download a media file, click the download button next to it to open it in a new tab, and you can right click and save it. To bulk download everything in the current filter, click Download Filtered as ZIP.
 4. To find media that isn't loaded raw, you can press Deep Scan to try to find anything hidden. (Some browsers may have issues individually downloading embedded blob data, but can still download them as zip.)
 
-*This project's code was coded by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
+*This project's code was made by [Google Gemini](https://gemini.google.com) and [Claude](https://claude.com), then edited by me.*
 
 *This project has a MIT license because it uses [jszip](https://stuk.github.io/jszip/) to handle zipping bulk downloads, which uses a MIT license.*
